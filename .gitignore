@@ -4,3 +4,9 @@
 *.jar
 *.war
 *.ear
+
+# binary file #
+*.bin
+
+# IDE description file #
+*.iml
