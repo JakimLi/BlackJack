@@ -1,10 +1,12 @@
 package blackjack.dealer;
 
+import blackjack.enums.GameState;
 import blackjack.exception.IllegalGameStateException;
 import blackjack.player.Player;
 
 import java.util.Random;
 
+import static blackjack.enums.GameState.*;
 import static org.apache.commons.lang.ArrayUtils.removeElement;
 
 public class Dealer {
@@ -14,6 +16,7 @@ public class Dealer {
     private Random randomGenerator;
     private Player house;
     private Player cetera;
+    private GameState state;
 
     public Dealer() {
         getCards();
@@ -64,5 +67,19 @@ public class Dealer {
 
     public Player getCetera() {
         return cetera;
+    }
+
+    public void startGame() throws IllegalGameStateException {
+        if (isTwoPlayers()) {
+            throw new IllegalGameStateException("Short of players.");
+        }
+        if (state == Ongoing) {
+            throw new IllegalGameStateException("Game already started.");
+        }
+        state = Ongoing;
+    }
+
+    private boolean isTwoPlayers() {
+        return house == null || cetera == null;
     }
 }

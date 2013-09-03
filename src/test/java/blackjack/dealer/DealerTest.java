@@ -98,4 +98,24 @@ public class DealerTest {
         assertThat(dealer.getHouse(), is(player1));
         assertThat(dealer.getCetera(), is(player2));
     }
+
+    @Test (expected = IllegalGameStateException.class)
+    public void should_not_start_the_game_if_player_count_less_than_2() throws Exception {
+        dealer.startGame();
+    }
+
+    @Test
+    public void should_not_start_the_game_if_game_already_started() throws Exception {
+        dealer.register(new Player());
+        dealer.register(new Player());
+        dealer.startGame();
+
+        try {
+            dealer.startGame();
+            fail("Expect exception" + IllegalGameStateException.class.toString()
+                    + ", actually got nothing");
+        } catch (IllegalGameStateException ex) {
+            assertTrue(true);
+        }
+    }
 }
