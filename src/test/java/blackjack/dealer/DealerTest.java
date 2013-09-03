@@ -1,5 +1,7 @@
 package blackjack.dealer;
 
+import blackjack.exception.IllegalGameStateException;
+import blackjack.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,6 +13,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.hasItemInArray;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -72,5 +76,26 @@ public class DealerTest {
         }
 
         dealer.pickACard();
+    }
+
+    @Test
+    public void should_only_register_two_players() throws Exception {
+        //given
+        Player player1 = new Player();
+        Player player2 = new Player();
+        Player player3 = new Player();
+
+        dealer.register(player1);
+        dealer.register(player2);
+
+        //when && then
+        try {
+            dealer.register(player3);
+            fail();
+        } catch (IllegalGameStateException ex) {
+            assertTrue(true);
+        }
+        assertThat(dealer.getHouse(), is(player1));
+        assertThat(dealer.getCetera(), is(player2));
     }
 }

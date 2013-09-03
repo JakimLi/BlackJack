@@ -1,5 +1,8 @@
 package blackjack.dealer;
 
+import blackjack.exception.IllegalGameStateException;
+import blackjack.player.Player;
+
 import java.util.Random;
 
 import static org.apache.commons.lang.ArrayUtils.removeElement;
@@ -9,6 +12,8 @@ public class Dealer {
 
     private Card[] cards = new Card[52];
     private Random randomGenerator;
+    private Player house;
+    private Player cetera;
 
     public Dealer() {
         getCards();
@@ -41,5 +46,23 @@ public class Dealer {
         Card card = cards[randomGenerator.nextInt(cards.length)];
         cards = (Card[]) removeElement(cards, card);
         return card;
+    }
+
+    public void register(Player player) throws IllegalGameStateException {
+        if (house == null) {
+            house = player;
+        } else if (cetera == null) {
+            cetera = player;
+        } else {
+            throw new IllegalGameStateException("Only two players in one game.");
+        }
+    }
+
+    public Player getHouse() {
+        return house;
+    }
+
+    public Player getCetera() {
+        return cetera;
     }
 }
