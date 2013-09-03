@@ -1,5 +1,6 @@
 package blackjack.dealer;
 
+import blackjack.enums.GameState;
 import blackjack.exception.IllegalGameStateException;
 import blackjack.player.Player;
 import org.junit.Before;
@@ -117,5 +118,19 @@ public class DealerTest {
         } catch (IllegalGameStateException ex) {
             assertTrue(true);
         }
+    }
+
+    @Test
+    public void should_start_game_if_player_count_is_2_and_game_is_ready() throws Exception {
+        //given
+        dealer.register(new Player());
+        dealer.register(new Player());
+        assertThat(dealer.getGameState(), is(GameState.Ready));
+
+        //when
+        dealer.startGame();
+
+        //then
+        assertThat(dealer.getGameState(), is(GameState.Ongoing));
     }
 }

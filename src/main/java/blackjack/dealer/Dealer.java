@@ -19,6 +19,7 @@ public class Dealer {
     private GameState state;
 
     public Dealer() {
+        state = Ready;
         getCards();
     }
 
@@ -70,16 +71,24 @@ public class Dealer {
     }
 
     public void startGame() throws IllegalGameStateException {
-        if (isTwoPlayers()) {
+        if (isTwoPlayersRegistered()) {
             throw new IllegalGameStateException("Short of players.");
         }
-        if (state == Ongoing) {
+        if (isGameAlreadyStarted()) {
             throw new IllegalGameStateException("Game already started.");
         }
         state = Ongoing;
     }
 
-    private boolean isTwoPlayers() {
+    private boolean isGameAlreadyStarted() {
+        return state == Ongoing;
+    }
+
+    private boolean isTwoPlayersRegistered() {
         return house == null || cetera == null;
+    }
+
+    public GameState getGameState() {
+        return state;
     }
 }
