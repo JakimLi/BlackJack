@@ -9,7 +9,9 @@ import org.junit.Test;
 import java.util.Random;
 
 import static blackjack.dealer.Dealer.CARD_VALUES;
+import static blackjack.enums.Face.*;
 import static blackjack.enums.Suit.*;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -139,14 +141,14 @@ public class DealerTest {
     public void should_count_points_of_player_cards() throws Exception {
         //given
         Player player = new Player();
-        player.takeOneCard(new Card("Ace", Diamonds));
-        player.takeOneCard(new Card("10", Diamonds));
-        player.takeOneCard(new Card("Jack", Diamonds));
-        player.takeOneCard(new Card("Queen", Diamonds));
-        player.takeOneCard(new Card("King", Diamonds));
+        player.takeOneCard(new Card("Ace", Diamonds), Up);
+        player.takeOneCard(new Card("10", Diamonds), Up);
+        player.takeOneCard(new Card("Jack", Diamonds), Down);
+        player.takeOneCard(new Card("Queen", Diamonds), Down);
+        player.takeOneCard(new Card("King", Diamonds), Up);
 
         //when
-        int value = dealer.count(player.getCards());
+        int value = dealer.count(player);
 
         //then
         assertThat(value, is(41));
@@ -158,6 +160,24 @@ public class DealerTest {
         Player player = new Player();
 
         //when
-        dealer.dealt(player, new Card("Ace", Diamonds));
+        dealer.dealt(player, new Card("Ace", Diamonds), Down);
+    }
+
+    @Test
+    public void should_dealt_card_with_face_down_or_up_if_game_is_started() throws Exception {
+        //given
+        Player house = new Player();
+        dealer.register(house);
+        dealer.register(new Player());
+        dealer.startGame();
+        Card ace = new Card("Ace", Diamonds);
+        Card jack = new Card("Jack", Diamonds);
+
+        //when
+        dealer.dealt(house, ace, Down);
+        dealer.dealt(house, jack, Up);
+
+        //then
+        assertThat(house.getFaceUpCards(), hasItem(jack));
     }
 }

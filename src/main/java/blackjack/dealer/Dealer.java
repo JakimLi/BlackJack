@@ -1,10 +1,10 @@
 package blackjack.dealer;
 
+import blackjack.enums.Face;
 import blackjack.enums.GameState;
 import blackjack.exception.IllegalGameStateException;
 import blackjack.player.Player;
 
-import java.util.List;
 import java.util.Random;
 
 import static blackjack.enums.GameState.Ongoing;
@@ -95,17 +95,14 @@ public class Dealer {
         return state;
     }
 
-    public int count(List<Card> cards) {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getValue();
-        }
-        return sum;
+    public int count(Player player) {
+        return player.getValue();
     }
 
-    public void dealt(Player player, Card card) throws IllegalGameStateException {
+    public void dealt(Player player, Card card, Face face) throws IllegalGameStateException {
         if (!isGameAlreadyStarted()) {
             throw new IllegalGameStateException("Game is not started, cannot dealt cards to anyone.");
         }
+        player.takeOneCard(card, face);
     }
 }
