@@ -101,7 +101,7 @@ public class DealerTest {
         assertThat(dealer.getCetera(), is(player2));
     }
 
-    @Test (expected = IllegalGameStateException.class)
+    @Test(expected = IllegalGameStateException.class)
     public void should_not_start_the_game_if_player_count_less_than_2() throws Exception {
         dealer.startGame();
     }
@@ -150,5 +150,14 @@ public class DealerTest {
 
         //then
         assertThat(value, is(41));
+    }
+
+    @Test(expected = IllegalGameStateException.class)
+    public void should_not_dealt_card_if_game_is_not_started() throws Exception {
+        //given
+        Player player = new Player();
+
+        //when
+        dealer.dealt(player, new Card("Ace", Diamonds));
     }
 }

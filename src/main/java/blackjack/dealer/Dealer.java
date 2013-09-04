@@ -102,4 +102,10 @@ public class Dealer {
         }
         return sum;
     }
+
+    public void dealt(Player player, Card card) throws IllegalGameStateException {
+        if (!isGameAlreadyStarted()) {
+            throw new IllegalGameStateException("Game is not started, cannot dealt cards to anyone.");
+        }
+    }
 }
