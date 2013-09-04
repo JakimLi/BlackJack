@@ -4,6 +4,7 @@ import blackjack.enums.GameState;
 import blackjack.exception.IllegalGameStateException;
 import blackjack.player.Player;
 
+import java.util.List;
 import java.util.Random;
 
 import static blackjack.enums.GameState.Ongoing;
@@ -92,5 +93,13 @@ public class Dealer {
 
     public GameState getGameState() {
         return state;
+    }
+
+    public int count(List<Card> cards) {
+        int sum = 0;
+        for (Card card : cards) {
+            sum += card.getValue();
+        }
+        return sum;
     }
 }

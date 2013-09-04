@@ -134,4 +134,21 @@ public class DealerTest {
         //then
         assertThat(dealer.getGameState(), is(GameState.Ongoing));
     }
+
+    @Test
+    public void should_count_points_of_player_cards() throws Exception {
+        //given
+        Player player = new Player();
+        player.takeOneCard(new Card("Ace", Diamonds));
+        player.takeOneCard(new Card("10", Diamonds));
+        player.takeOneCard(new Card("Jack", Diamonds));
+        player.takeOneCard(new Card("Queen", Diamonds));
+        player.takeOneCard(new Card("King", Diamonds));
+
+        //when
+        int value = dealer.count(player.getCards());
+
+        //then
+        assertThat(value, is(41));
+    }
 }
