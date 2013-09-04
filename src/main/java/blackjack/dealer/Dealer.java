@@ -6,7 +6,9 @@ import blackjack.player.Player;
 
 import java.util.Random;
 
-import static blackjack.enums.GameState.*;
+import static blackjack.enums.GameState.Ongoing;
+import static blackjack.enums.GameState.Ready;
+import static blackjack.enums.Suit.*;
 import static org.apache.commons.lang.ArrayUtils.removeElement;
 
 public class Dealer {
@@ -32,10 +34,10 @@ public class Dealer {
     }
 
     private int fillCardsBySuits(int i, String value) {
-        cards[i++] = new Card(value, "Spades");
-        cards[i++] = new Card(value, "Hearts");
-        cards[i++] = new Card(value, "Clubs");
-        cards[i++] = new Card(value, "Diamonds");
+        cards[i++] = new Card(value, Spades);
+        cards[i++] = new Card(value, Hearts);
+        cards[i++] = new Card(value, Clubs);
+        cards[i++] = new Card(value, Diamonds);
         return i;
     }
 

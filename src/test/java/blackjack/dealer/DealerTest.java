@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.Random;
 
 import static blackjack.dealer.Dealer.CARD_VALUES;
+import static blackjack.enums.Suit.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,10 +43,10 @@ public class DealerTest {
         assertThat(cards, arrayWithSize(52));
 
         for (String value : CARD_VALUES) {
-            assertThat(cards, hasItemInArray(new Card(value, "Spades")));
-            assertThat(cards, hasItemInArray(new Card(value, "Hearts")));
-            assertThat(cards, hasItemInArray(new Card(value, "Clubs")));
-            assertThat(cards, hasItemInArray(new Card(value, "Diamonds")));
+            assertThat(cards, hasItemInArray(new Card(value, Spades)));
+            assertThat(cards, hasItemInArray(new Card(value, Hearts)));
+            assertThat(cards, hasItemInArray(new Card(value, Clubs)));
+            assertThat(cards, hasItemInArray(new Card(value, Diamonds)));
         }
     }
 
@@ -55,7 +56,7 @@ public class DealerTest {
         Card card = dealer.pickACard();
 
         //then
-        assertThat(card, is(new Card("Ace", "Spades")));
+        assertThat(card, is(new Card("Ace", Spades)));
     }
 
     @Test
@@ -65,7 +66,7 @@ public class DealerTest {
         Card secondCard = dealer.pickACard();
 
         //then
-        assertThat(firstCard, is(new Card("Ace", "Spades")));
+        assertThat(firstCard, is(new Card("Ace", Spades)));
         assertThat(firstCard, not(secondCard));
     }
 
