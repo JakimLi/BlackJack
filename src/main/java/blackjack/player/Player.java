@@ -2,6 +2,7 @@ package blackjack.player;
 
 import blackjack.dealer.Card;
 import blackjack.enums.Face;
+import blackjack.exception.IllegalPlayerStateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 import static blackjack.enums.Face.Up;
 
 public class Player {
+    private static final int UP_LIMIT_POINTS = 21;
     private List<Card> faceDownCards;
     private List<Card> faceUpCards;
 
@@ -39,5 +41,11 @@ public class Player {
             sum += card.getValue();
         }
         return sum;
+    }
+
+    public void hit() throws IllegalPlayerStateException {
+        if (getValue() >= UP_LIMIT_POINTS) {
+            throw new IllegalPlayerStateException("Point exceeds 21.");
+        }
     }
 }
