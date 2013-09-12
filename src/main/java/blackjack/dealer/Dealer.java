@@ -3,6 +3,7 @@ package blackjack.dealer;
 import blackjack.enums.Face;
 import blackjack.enums.GameState;
 import blackjack.exception.IllegalGameStateException;
+import blackjack.exception.IllegalPlayerStateException;
 import blackjack.player.Player;
 
 import java.util.Random;
@@ -14,6 +15,7 @@ import static org.apache.commons.lang.ArrayUtils.removeElement;
 
 public class Dealer {
     public static final String[] CARD_VALUES = new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+    private static final int UP_LIMIT_POINTS = 21;
 
     private Card[] cards = new Card[52];
     private Random randomGenerator;
@@ -23,6 +25,7 @@ public class Dealer {
 
     public Dealer() {
         state = Ready;
+        randomGenerator = new Random();
         getCards();
     }
 
@@ -99,9 +102,12 @@ public class Dealer {
         return player.getValue();
     }
 
-    public void dealt(Player player, Card card, Face face) throws IllegalGameStateException {
+    public void dealt(Player player, Card card, Face face) throws IllegalGameStateException, IllegalPlayerStateException {
         if (!isGameAlreadyStarted()) {
             throw new IllegalGameStateException("Game is not started, cannot dealt cards to anyone.");
+        }
+        if (count(player) >= UP_LIMIT_POINTS) {
+            throw new IllegalPlayerStateException("Point exceeds 21.");
         }
         player.takeOneCard(card, face);
     }

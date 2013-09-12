@@ -9,11 +9,10 @@ import org.junit.Test;
 import java.util.Random;
 
 import static blackjack.dealer.Dealer.CARD_VALUES;
-import static blackjack.enums.Face.*;
+import static blackjack.enums.Face.Down;
+import static blackjack.enums.Face.Up;
 import static blackjack.enums.Suit.*;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.hasItemInArray;
