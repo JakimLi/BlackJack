@@ -61,6 +61,42 @@ public class PlayerTest {
         assertCannotHit(player, dealer);
     }
 
+    @Test
+    public void player_cannot_hit_after_stay() throws Exception {
+        //given
+        Player player = new Player();
+        int valueInHand = player.getValue();
+        Dealer dealer = new Dealer();
+        dealer.register(player);
+        dealer.register(new Player());
+        dealer.startGame();
+
+        //when
+        player.stay(dealer);
+
+        //then
+        assertThat(player.getValue(), is(valueInHand));
+        try {
+            player.hit(dealer);
+            fail();
+        } catch (IllegalPlayerStateException ex) {
+            assertTrue(true);
+        }
+
+    }
+
+    @Test (expected = IllegalGameStateException.class)
+    public void player_cannot_stay_if_game_is_not_started() throws Exception {
+        //given
+        Dealer dealer = new Dealer();
+        Player player = new Player();
+        dealer.register(new Player());
+        dealer.register(player);
+
+        //when
+        player.stay(dealer);
+    }
+
     private void assertCannotHit(Player player, Dealer dealer) throws IllegalGameStateException {
         try {
             player.hit(dealer);

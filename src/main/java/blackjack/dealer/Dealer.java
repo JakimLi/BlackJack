@@ -2,6 +2,7 @@ package blackjack.dealer;
 
 import blackjack.enums.Face;
 import blackjack.enums.GameState;
+import blackjack.enums.PlayerState;
 import blackjack.exception.IllegalGameStateException;
 import blackjack.exception.IllegalPlayerStateException;
 import blackjack.player.Player;
@@ -108,6 +109,9 @@ public class Dealer {
         }
         if (count(player) >= UP_LIMIT_POINTS) {
             throw new IllegalPlayerStateException("Point exceeds 21.");
+        }
+        if (player.getStatus() == PlayerState.Stay){
+            throw new IllegalPlayerStateException("Player is staying.");
         }
         player.takeOneCard(card, face);
     }
