@@ -39,6 +39,22 @@ public class DealerTest {
         assertOneDeckOfCards(dealer.getCards());
     }
 
+    @Test
+    public void each_player_should_get_two_cards_after_game_started() throws Exception {
+        dealer = new Dealer();
+
+        Player player1 = new Player();
+        dealer.register(player1);
+
+        Player player2 = new Player();
+        dealer.register(player2);
+
+        dealer.startGame();
+
+        assertThat(player1.cardAmount(), is(2));
+        assertThat(player2.cardAmount(), is(2));
+    }
+
     private void assertOneDeckOfCards(Card[] cards) {
 
         assertThat(cards, arrayWithSize(52));

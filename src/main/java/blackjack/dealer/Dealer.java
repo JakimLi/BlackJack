@@ -9,6 +9,7 @@ import blackjack.player.Player;
 
 import java.util.Random;
 
+import static blackjack.enums.Face.*;
 import static blackjack.enums.GameState.Ongoing;
 import static blackjack.enums.GameState.Ready;
 import static blackjack.enums.Suit.*;
@@ -77,7 +78,7 @@ public class Dealer {
         return cetera;
     }
 
-    public void startGame() throws IllegalGameStateException {
+    public void startGame() throws IllegalGameStateException, IllegalPlayerStateException {
         if (isTwoPlayersRegistered()) {
             throw new IllegalGameStateException("Short of players.");
         }
@@ -85,6 +86,13 @@ public class Dealer {
             throw new IllegalGameStateException("Game already started.");
         }
         state = Ongoing;
+        dealTwoCards(house);
+        dealTwoCards(cetera);
+    }
+
+    private void dealTwoCards(Player player) throws IllegalGameStateException, IllegalPlayerStateException {
+        dealt(player, pickACard(), Up);
+        dealt(player, pickACard(), Up);
     }
 
     private boolean isGameAlreadyStarted() {
@@ -104,6 +112,12 @@ public class Dealer {
     }
 
     public void dealt(Player player, Card card, Face face) throws IllegalGameStateException, IllegalPlayerStateException {
+        if (canDeal(player)) {
+            player.takeOneCard(card, face);
+        }
+    }
+
+    public boolean canDeal(Player player) throws IllegalGameStateException, IllegalPlayerStateException {
         if (!isGameAlreadyStarted()) {
             throw new IllegalGameStateException("Game is not started, cannot dealt cards to anyone.");
         }
@@ -113,6 +127,6 @@ public class Dealer {
         if (player.getStatus() == PlayerState.Stay){
             throw new IllegalPlayerStateException("Player is staying.");
         }
-        player.takeOneCard(card, face);
+        return true;
     }
 }

@@ -6,26 +6,41 @@ import blackjack.exception.IllegalGameStateException;
 import blackjack.exception.IllegalPlayerStateException;
 import org.junit.Test;
 
+import java.util.Random;
+
 import static blackjack.enums.Face.Up;
 import static blackjack.enums.Suit.Diamonds;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PlayerTest {
     @Test
-    public void should_not_hit_if_the_points_of_player_is_not_less_than_21() throws Exception {
+    public void should_not_hit_if_the_points_of_player_is_larger_than_21() throws Exception {
         //given
-        Player player = new Player();
-        player.takeOneCard(new Card("Ace", Diamonds), Up);
-        player.takeOneCard(new Card("10", Diamonds), Up);
-        player.takeOneCard(new Card("Jack", Diamonds), Up);
-
         Dealer dealer = new Dealer();
+        Random random = mock(Random.class);
+        when(random.nextInt(anyInt()))
+                .thenReturn(0)
+                .thenReturn(50)
+                .thenReturn(49)
+                .thenReturn(48);
+        dealer.setRandomGenerator(random);
+
+
+        Player player = new Player();
+//        player.takeOneCard(new Card("Ace", Diamonds), Up);
+//        player.takeOneCard(new Card("10", Diamonds), Up);
+
         dealer.register(player);
         dealer.register(new Player());
         dealer.startGame();
+        player.takeOneCard(new Card("Jack", Diamonds), Up);
+        System.out.println(player.getValue());
 
         //when && then
         assertCannotHit(player, dealer);
@@ -48,7 +63,7 @@ public class PlayerTest {
         player.hit(dealer);
 
         //then
-        assertThat(player.cardAmount(), is(1));
+        assertThat(player.cardAmount(), is(3));
     }
 
     @Test
@@ -65,11 +80,11 @@ public class PlayerTest {
     public void player_cannot_hit_after_stay() throws Exception {
         //given
         Player player = new Player();
-        int valueInHand = player.getValue();
         Dealer dealer = new Dealer();
         dealer.register(player);
         dealer.register(new Player());
         dealer.startGame();
+        int valueInHand = player.getValue();
 
         //when
         player.stay(dealer);
@@ -85,7 +100,7 @@ public class PlayerTest {
 
     }
 
-    @Test (expected = IllegalGameStateException.class)
+    @Test(expected = IllegalGameStateException.class)
     public void player_cannot_stay_if_game_is_not_started() throws Exception {
         //given
         Dealer dealer = new Dealer();

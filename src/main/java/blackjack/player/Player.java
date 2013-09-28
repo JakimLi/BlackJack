@@ -52,7 +52,9 @@ public class Player {
     }
 
     public void hit(Dealer dealer) throws IllegalPlayerStateException, IllegalGameStateException {
-        dealer.dealt(this, dealer.pickACard(), Down);
+        if (dealer.canDeal(this)) {
+            dealer.dealt(this, dealer.pickACard(), Down);
+        }
     }
 
     public int cardAmount() {
