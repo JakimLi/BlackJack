@@ -1,35 +1,38 @@
 h1 {
-   color: red;
    text-align: center;
    font-size: 60pt;
-}
-
-#main {
-    float: left;
 }
 
 .card {
     float: left;
     height: 240px;
     width: 170px;
-    background-image: url(/BlackJack/images/cards/Clubs/Ace.jpg);
+    background-image: url(/BlackJack/images/stick_small.jpg);
 }
 
-#control {
-    margin-left: 50px;
-    text-align: center;
+#main, #players-container, #control-container  {
     float: left;
-    margin-right: 100px;
 }
 
-#control button {
-    height: 90px;
-    width: 150px;
-    margin: 10px 0px 10px 0px;
-    font-size: 30pt;
+#host, #cetera {
+    height: 400px;
+    width: 1080px;
 }
 
-
-#cards {
+#players, #host, #status-container {
     float: right;
+}
+
+#players {
+    margin-left: 74px;
+}
+
+
+.sidebar-nav-fixed {
+    position:fixed;
+}
+
+.sidebar-score-fixed {
+    position:fixed;
+    width: 270px;
 }

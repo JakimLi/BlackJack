@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static blackjack.enums.Face.Up;
 import static blackjack.enums.Suit.Diamonds;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,19 +32,16 @@ public class PlayerTest {
 
 
         Player player = new Player();
-//        player.takeOneCard(new Card("Ace", Diamonds), Up);
-//        player.takeOneCard(new Card("10", Diamonds), Up);
 
         dealer.register(player);
         dealer.register(new Player());
         dealer.startGame();
-        player.takeOneCard(new Card("Jack", Diamonds), Up);
-        System.out.println(player.getValue());
+        player.takeOneCard(new Card("Jack", Diamonds));
 
         //when && then
         assertCannotHit(player, dealer);
 
-        player.takeOneCard(new Card("8", Diamonds), Up);
+        player.takeOneCard(new Card("8", Diamonds));
 
         assertCannotHit(player, dealer);
     }
@@ -60,7 +56,7 @@ public class PlayerTest {
         dealer.startGame();
 
         //when
-        player.hit(dealer);
+        player.hit(dealer, null);
 
         //then
         assertThat(player.cardAmount(), is(3));
@@ -92,12 +88,11 @@ public class PlayerTest {
         //then
         assertThat(player.getValue(), is(valueInHand));
         try {
-            player.hit(dealer);
+            player.hit(dealer, null);
             fail();
         } catch (IllegalPlayerStateException ex) {
             assertTrue(true);
         }
-
     }
 
     @Test(expected = IllegalGameStateException.class)
@@ -114,7 +109,7 @@ public class PlayerTest {
 
     private void assertCannotHit(Player player, Dealer dealer) throws IllegalGameStateException {
         try {
-            player.hit(dealer);
+            player.hit(dealer, null);
             fail();
         } catch (IllegalPlayerStateException ex) {
             assertTrue(true);

@@ -18,11 +18,11 @@ public class CardTest {
         Card king = new Card("King", Spades);
 
         //then
-        assertThat(ace.getValue(), is(1));
-        assertThat(two.getValue(), is(2));
-        assertThat(ten.getValue(), is(10));
-        assertThat(jack.getValue(), is(10));
-        assertThat(queen.getValue(), is(10));
-        assertThat(king.getValue(), is(10));
+        assertThat(ace.getNumberValue(), is(1));
+        assertThat(two.getNumberValue(), is(2));
+        assertThat(ten.getNumberValue(), is(10));
+        assertThat(jack.getNumberValue(), is(10));
+        assertThat(queen.getNumberValue(), is(10));
+        assertThat(king.getNumberValue(), is(10));
     }
 }

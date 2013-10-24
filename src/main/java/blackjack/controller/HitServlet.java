@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,14 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static blackjack.controller.Table.startGame;
+import static blackjack.controller.Table.hit;
 import static blackjack.util.GsonUtil.writeToJson;
 
-public class StartServlet extends HttpServlet {
-    private final static Logger logger = LoggerFactory.getLogger(StartServlet.class);
+public class HitServlet extends HttpServlet {
+    private final static Logger logger = LoggerFactory.getLogger(HitServlet.class);
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StartActionResponse startActionResponse = startGame();
-        writeToJson(resp, startActionResponse);
+        HitActionResponse response = hit();
+        writeToJson(resp, response);
     }
 }

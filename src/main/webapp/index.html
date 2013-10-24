@@ -2,22 +2,72 @@
 <html>
 <head>
     <title>Black Jack</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/blackjack.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Black Jack</h1>
-    <div id="main">
-        <div id="control">
-            <button id="start">Start</button><br/>
-            <button id="hit">Hit</button><br/>
-            <button id="stay">Stay</button><br/>
+<div class="page-header">
+    <h1>Black Jack
+        <small>Go rock it</small>
+    </h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" id="main">
+        <div class="span2" id="control-container">
+            <div class="btn-group-vertical btn-group-lg sidebar-nav-fixed" id="control">
+                <button type="button" class="btn btn-default" id="start">Start</button>
+                <button type="button" class="btn btn-default" id="hit">Hit</button>
+                <button type="button" class="btn btn-default" id="stay">Stay</button>
+            </div>
         </div>
-        <div id="cards">
-            <div class="card">
+        <div class="span6" id="players-container">
+            <div class="row-fluid" id="players">
+                <div class="span12">
+                    <div class="panel panel-default" id="cetera">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Player</h3>
+                        </div>
+                        <div class="panel-body">
+                            <!--<div class="card"></div>-->
+                            <!--<div class="card"></div>-->
+                            <!--<div class="card"></div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="panel panel-default" id="host">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Host</h3>
+                        </div>
+                        <div class="panel-body">
+                            <!--<div class="card"></div>-->
+                            <!--<div class="card"></div>-->
+                            <!--<div class="card"></div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span4" id="status-container">
+            <div class="span12">
+                <div class="panel panel-default sidebar-score-fixed" id="scores">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Scores</h3>
+                    </div>
+                    <div class="panel-body">
+                        <small id="cetera-code">Player</small><h1 id="cetera-score">0</h1>
+                        <small id="host-code">Host</small><h1 id="host-score">0</h1>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <script src="js/jquery-1.10.2.min.js"></script>
-    <script src="js/blackjack.js"></script>
+</div>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/blackjack.js"></script>
 </body>
 </html>

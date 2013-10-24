@@ -2,7 +2,6 @@ package blackjack.player;
 
 import blackjack.dealer.Card;
 import blackjack.dealer.Dealer;
-import blackjack.enums.Face;
 import blackjack.enums.PlayerState;
 import blackjack.exception.IllegalGameStateException;
 import blackjack.exception.IllegalPlayerStateException;
@@ -10,55 +9,43 @@ import blackjack.exception.IllegalPlayerStateException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blackjack.enums.Face.Down;
-import static blackjack.enums.Face.Up;
 import static blackjack.enums.GameState.Ongoing;
 import static blackjack.enums.PlayerState.Active;
 import static blackjack.enums.PlayerState.Stay;
 
 public class Player {
-    private List<Card> faceDownCards;
-    private List<Card> faceUpCards;
     private PlayerState status;
+    private List<Card> cardsInHand;
 
     public Player() {
-        faceDownCards = new ArrayList<Card>();
-        faceUpCards = new ArrayList<Card>();
+        cardsInHand = new ArrayList<Card>();
         status = Active;
     }
 
-    public void takeOneCard(Card card, Face face) {
-        if (face == Up) {
-            faceUpCards.add(card);
-        } else {
-            this.faceDownCards.add(card);
-        }
-    }
-
-    public List<Card> getFaceUpCards() {
-        return faceUpCards;
+    public void takeOneCard(Card card) {
+        cardsInHand.add(card);
     }
 
     public int getValue() {
-        return countCards(faceDownCards) + countCards(faceUpCards);
+        return countCards(cardsInHand);
     }
 
     private int countCards(List<Card> cards) {
         int sum = 0;
         for (Card card : cards) {
-            sum += card.getValue();
+            sum += card.getNumberValue();
         }
         return sum;
     }
 
-    public void hit(Dealer dealer) throws IllegalPlayerStateException, IllegalGameStateException {
+    public void hit(Dealer dealer, Card card) throws IllegalPlayerStateException, IllegalGameStateException {
         if (dealer.canDeal(this)) {
-            dealer.dealt(this, dealer.pickACard(), Down);
+            dealer.dealt(this, card);
         }
     }
 
     public int cardAmount() {
-        return faceDownCards.size() + faceUpCards.size();
+        return cardsInHand.size();
     }
 
     public void stay(Dealer dealer) throws IllegalGameStateException {
@@ -70,5 +57,9 @@ public class Player {
 
     public PlayerState getStatus() {
         return status;
+    }
+
+    public List<Card> getCards() {
+        return cardsInHand;
     }
 }

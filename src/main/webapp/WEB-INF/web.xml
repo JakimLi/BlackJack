@@ -12,4 +12,22 @@
         <servlet-name>start</servlet-name>
         <url-pattern>/start</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>hit</servlet-name>
+        <servlet-class>blackjack.controller.HitServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>hit</servlet-name>
+        <url-pattern>/hit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>stay</servlet-name>
+        <servlet-class>blackjack.controller.StayServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>stay</servlet-name>
+        <url-pattern>/stay</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -30,12 +30,16 @@ public class Card {
         this.suit = suit;
     }
 
-    public int getValue() {
+    public int getNumberValue() {
         if (isFaceCard()) {
             return 10;
         } else {
             return ArrayUtils.indexOf(Dealer.CARD_VALUES, value) + 1;
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 
     private boolean isFaceCard() {

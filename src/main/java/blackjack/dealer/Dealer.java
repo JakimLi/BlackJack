@@ -1,6 +1,5 @@
 package blackjack.dealer;
 
-import blackjack.enums.Face;
 import blackjack.enums.GameState;
 import blackjack.enums.PlayerState;
 import blackjack.exception.IllegalGameStateException;
@@ -9,7 +8,6 @@ import blackjack.player.Player;
 
 import java.util.Random;
 
-import static blackjack.enums.Face.*;
 import static blackjack.enums.GameState.Ongoing;
 import static blackjack.enums.GameState.Ready;
 import static blackjack.enums.Suit.*;
@@ -17,7 +15,7 @@ import static org.apache.commons.lang.ArrayUtils.removeElement;
 
 public class Dealer {
     public static final String[] CARD_VALUES = new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-    private static final int UP_LIMIT_POINTS = 21;
+    public static final int UP_LIMIT_POINTS = 21;
 
     private Card[] cards = new Card[52];
     private Random randomGenerator;
@@ -91,8 +89,8 @@ public class Dealer {
     }
 
     private void dealTwoCards(Player player) throws IllegalGameStateException, IllegalPlayerStateException {
-        dealt(player, pickACard(), Up);
-        dealt(player, pickACard(), Up);
+        dealt(player, pickACard());
+        dealt(player, pickACard());
     }
 
     private boolean isGameAlreadyStarted() {
@@ -111,9 +109,9 @@ public class Dealer {
         return player.getValue();
     }
 
-    public void dealt(Player player, Card card, Face face) throws IllegalGameStateException, IllegalPlayerStateException {
+    public void dealt(Player player, Card card) throws IllegalGameStateException, IllegalPlayerStateException {
         if (canDeal(player)) {
-            player.takeOneCard(card, face);
+            player.takeOneCard(card);
         }
     }
 
@@ -128,5 +126,9 @@ public class Dealer {
             throw new IllegalPlayerStateException("Player is staying.");
         }
         return true;
+    }
+
+    public void stopGame() {
+        state = GameState.Ready;
     }
 }

@@ -9,8 +9,6 @@ import org.junit.Test;
 import java.util.Random;
 
 import static blackjack.dealer.Dealer.CARD_VALUES;
-import static blackjack.enums.Face.Down;
-import static blackjack.enums.Face.Up;
 import static blackjack.enums.Suit.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -156,11 +154,11 @@ public class DealerTest {
     public void should_count_points_of_player_cards() throws Exception {
         //given
         Player player = new Player();
-        player.takeOneCard(new Card("Ace", Diamonds), Up);
-        player.takeOneCard(new Card("10", Diamonds), Up);
-        player.takeOneCard(new Card("Jack", Diamonds), Down);
-        player.takeOneCard(new Card("Queen", Diamonds), Down);
-        player.takeOneCard(new Card("King", Diamonds), Up);
+        player.takeOneCard(new Card("Ace", Diamonds));
+        player.takeOneCard(new Card("10", Diamonds));
+        player.takeOneCard(new Card("Jack", Diamonds));
+        player.takeOneCard(new Card("Queen", Diamonds));
+        player.takeOneCard(new Card("King", Diamonds));
 
         //when
         int value = dealer.count(player);
@@ -175,11 +173,11 @@ public class DealerTest {
         Player player = new Player();
 
         //when
-        dealer.dealt(player, new Card("Ace", Diamonds), Down);
+        dealer.dealt(player, new Card("Ace", Diamonds));
     }
 
     @Test
-    public void should_dealt_card_with_face_down_or_up_if_game_is_started() throws Exception {
+    public void should_dealt_card_if_game_is_started() throws Exception {
         //given
         Player house = new Player();
         dealer.register(house);
@@ -189,10 +187,10 @@ public class DealerTest {
         Card jack = new Card("Jack", Diamonds);
 
         //when
-        dealer.dealt(house, ace, Down);
-        dealer.dealt(house, jack, Up);
+        dealer.dealt(house, ace);
+        dealer.dealt(house, jack);
 
         //then
-        assertThat(house.getFaceUpCards(), hasItem(jack));
+        assertThat(house.getCards(), hasItem(jack));
     }
 }
