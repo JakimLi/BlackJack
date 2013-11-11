@@ -12,11 +12,20 @@ apply plugin: 'idea'
 apply plugin: 'maven'
 apply plugin: 'war'
 apply plugin: 'jetty'
+apply plugin: 'jacoco'
 
 
 repositories {
     mavenCentral() // Use 'maven central' for resolving your thirdparty dependencies.
     // you can declare any maven/ivy/file repository to resolve your thirdparty dependencies
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
 }
 
 
