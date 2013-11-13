@@ -115,7 +115,7 @@ function appendCard(player, face, suit, value) {
         $(".card" + suit + value ).css("width", "170px");
         $(".card" + suit + value ).css("background-image", "url(/BlackJack/images/stick_small.jpg)");
     }
-    $(".card" + suit + value).fadeOut('slow').fadeIn('slow');
+    $(".card" + suit + value + ":last").fadeOut('slow').fadeIn('slow');
 }
 
 function stay() {
