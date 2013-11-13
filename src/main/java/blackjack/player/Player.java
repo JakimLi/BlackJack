@@ -62,4 +62,9 @@ public class Player {
     public List<Card> getCards() {
         return cardsInHand;
     }
+
+    public void getReady() {
+        cardsInHand.clear();
+        status = Active;
+    }
 }

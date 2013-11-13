@@ -2,6 +2,7 @@ package blackjack.player;
 
 import blackjack.dealer.Card;
 import blackjack.dealer.Dealer;
+import blackjack.enums.PlayerState;
 import blackjack.exception.IllegalGameStateException;
 import blackjack.exception.IllegalPlayerStateException;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import java.util.Random;
 
 import static blackjack.enums.Suit.Diamonds;
+import static blackjack.enums.Suit.Spades;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -35,6 +37,7 @@ public class PlayerTest {
 
         dealer.register(player);
         dealer.register(new Player());
+        dealer.shuffle();
         dealer.startGame();
         player.takeOneCard(new Card("Jack", Diamonds));
 
@@ -53,6 +56,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
         dealer.register(new Player());
         dealer.register(player);
+        dealer.shuffle();
         dealer.startGame();
 
         //when
@@ -79,6 +83,7 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
         dealer.register(player);
         dealer.register(new Player());
+        dealer.shuffle();
         dealer.startGame();
         int valueInHand = player.getValue();
 
@@ -105,6 +110,17 @@ public class PlayerTest {
 
         //when
         player.stay(dealer);
+    }
+
+    @Test
+    public void player_can_refresh_to_start_a_new_game() throws Exception {
+        Player player = new Player();
+        player.takeOneCard(new Card("3", Spades));
+
+        player.getReady();
+
+        assertThat(player.getCards().size(), is(0));
+        assertThat(player.getStatus(), is(PlayerState.Active));
     }
 
     private void assertCannotHit(Player player, Dealer dealer) throws IllegalGameStateException {

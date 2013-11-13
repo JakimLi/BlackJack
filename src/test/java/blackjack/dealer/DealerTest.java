@@ -34,7 +34,7 @@ public class DealerTest {
 
     @Test
     public void dealer_should_have_one_deck_of_cards() throws Exception {
-        assertOneDeckOfCards(dealer.getCards());
+        assertOneDeckOfCards(dealer.shuffle());
     }
 
     @Test
@@ -47,6 +47,7 @@ public class DealerTest {
         Player player2 = new Player();
         dealer.register(player2);
 
+        dealer.shuffle();
         dealer.startGame();
 
         assertThat(player1.cardAmount(), is(2));
@@ -68,6 +69,7 @@ public class DealerTest {
     @Test
     public void should_pick_one_card_randomly_from_the_deck_of_card() throws Exception {
         //when
+        dealer.shuffle();
         Card card = dealer.pickACard();
 
         //then
@@ -77,6 +79,7 @@ public class DealerTest {
     @Test
     public void should_not_pick_card_already_picked() throws Exception {
         //when
+        dealer.shuffle();
         Card firstCard = dealer.pickACard();
         Card secondCard = dealer.pickACard();
 
@@ -125,6 +128,7 @@ public class DealerTest {
     public void should_not_start_the_game_if_game_already_started() throws Exception {
         dealer.register(new Player());
         dealer.register(new Player());
+        dealer.shuffle();
         dealer.startGame();
 
         try {
@@ -144,6 +148,7 @@ public class DealerTest {
         assertThat(dealer.getGameState(), is(GameState.Ready));
 
         //when
+        dealer.shuffle();
         dealer.startGame();
 
         //then
@@ -182,6 +187,7 @@ public class DealerTest {
         Player house = new Player();
         dealer.register(house);
         dealer.register(new Player());
+        dealer.shuffle();
         dealer.startGame();
         Card ace = new Card("Ace", Diamonds);
         Card jack = new Card("Jack", Diamonds);

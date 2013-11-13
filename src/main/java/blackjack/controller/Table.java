@@ -7,6 +7,7 @@ import blackjack.exception.IllegalPlayerStateException;
 import blackjack.player.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Required;
 
 import java.io.Serializable;
 
@@ -15,31 +16,26 @@ import static blackjack.enums.PlayerState.Stay;
 
 public class Table implements Serializable {
     private final static Logger logger = LoggerFactory.getLogger(Table.class);
-    public static final String CETERA_USER_CODE = "cetera";
-    public static final String HOUSE_USER_CODE = "host";
-    public static final String EVEN_CODE = "even";
-    public static Dealer dealer;
-    public static Player house;
-    public static Player cetera;
+    private static final String CETERA_USER_CODE = "cetera";
+    private static final String HOUSE_USER_CODE = "host";
+    private static final String EVEN_CODE = "even";
+    private Dealer dealer;
+    private Player house;
+    private Player cetera;
 
-    static {
-        initTable();
-    }
-
-    private static void initTable() {
-        dealer = new Dealer();
-        logger.info("Dealer initiated.");
+    public void initTable() {
         try {
+            dealer.shuffle();
+            house.getReady();
+            cetera.getReady();
             dealer.register(house);
-            logger.info("House registered.");
             dealer.register(cetera);
-            logger.info("Cetera registered.");
         } catch (IllegalGameStateException e) {
             logger.error(e.getMessage());
         }
     }
 
-    public static StartActionResponse startGame() {
+    public StartActionResponse startGame() {
         StartActionResponse response = new StartActionResponse();
         try {
             dealer.startGame();
@@ -56,7 +52,7 @@ public class Table implements Serializable {
         }
     }
 
-    public static HitActionResponse hit() {
+    public HitActionResponse hit() {
         Card card = dealer.pickACard();
         HitActionResponse response = new HitActionResponse();
         try {
@@ -75,23 +71,23 @@ public class Table implements Serializable {
         }
     }
 
-    private static void checkGameStatusAndChooseWinner(HitActionResponse response, Player player) {
+    private void checkGameStatusAndChooseWinner(HitActionResponse response, Player player) {
         if (player.getValue() == UP_LIMIT_POINTS) {
             response.setWinnerCode(player.equals(cetera) ? CETERA_USER_CODE : HOUSE_USER_CODE);
-            restartGame();
+            stopGame();
         } else if (player.getValue() > UP_LIMIT_POINTS) {
             response.setWinnerCode(player.equals(cetera) ? HOUSE_USER_CODE : CETERA_USER_CODE);
-            restartGame();
+            stopGame();
         }
         response.setGameStatus(dealer.getGameState());
     }
 
-    private static void restartGame() {
+    public void stopGame() {
         dealer.stopGame();
-        initTable();
+//        initTable();
     }
 
-    private static Player decidePlayer(HitActionResponse response) {
+    private Player decidePlayer(HitActionResponse response) {
         Player player = cetera;
         response.setPlayerCode(CETERA_USER_CODE);
         if (cetera.getStatus() == Stay) {
@@ -101,7 +97,7 @@ public class Table implements Serializable {
         return player;
     }
 
-    public static StayActionResponse stay() {
+    public StayActionResponse stay() {
         Player player = cetera.getStatus() != Stay ? cetera : house;
         logger.info("Player:" + (player.equals(cetera) ? "cetera" : "house"));
         StayActionResponse response = new StayActionResponse();
@@ -112,7 +108,7 @@ public class Table implements Serializable {
                 logger.info("Winner:" + decideWinnerCode());
                 logger.info("winnersValue:" + (decideWinnerCode().equals("cetera") ? cetera.getValue() : house. getValue()));
                 response.setWinnerCode(decideWinnerCode());
-                restartGame();
+                stopGame();
             }
         } catch (IllegalGameStateException e) {
             response.setError(true);
@@ -120,7 +116,7 @@ public class Table implements Serializable {
         return response;
     }
 
-    private static String decideWinnerCode() {
+    private String decideWinnerCode() {
         int ceteraValue = cetera.getValue();
         int houseValue = house.getValue();
         if (ceteraValue > houseValue) {
@@ -131,4 +127,24 @@ public class Table implements Serializable {
             return EVEN_CODE;
         }
     }
+
+    @Required
+    public void setDealer(Dealer dealer) {
+        this.dealer = dealer;
+    }
+
+    @Required
+    public void setHouse(Player house) {
+        this.house = house;
+    }
+
+    @Required
+    public void setCetera(Player cetera) {
+        this.cetera = cetera;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
 }

@@ -17,7 +17,7 @@ public class Dealer {
     public static final String[] CARD_VALUES = new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
     public static final int UP_LIMIT_POINTS = 21;
 
-    private Card[] cards = new Card[52];
+    private Card[] cards;
     private Random randomGenerator;
     private Player house;
     private Player cetera;
@@ -26,10 +26,10 @@ public class Dealer {
     public Dealer() {
         state = Ready;
         randomGenerator = new Random();
-        getCards();
     }
 
-    public Card[] getCards() {
+    public Card[] shuffle() {
+        cards = new Card[52];
         int i = 0;
         for (String value : CARD_VALUES) {
             i = fillCardsBySuits(i, value);
@@ -122,13 +122,15 @@ public class Dealer {
         if (count(player) >= UP_LIMIT_POINTS) {
             throw new IllegalPlayerStateException("Point exceeds 21.");
         }
-        if (player.getStatus() == PlayerState.Stay){
+        if (player.getStatus() == PlayerState.Stay) {
             throw new IllegalPlayerStateException("Player is staying.");
         }
         return true;
     }
 
     public void stopGame() {
+        house = null;
+        cetera = null;
         state = GameState.Ready;
     }
 }

@@ -5,13 +5,13 @@ import blackjack.dealer.Card;
 import blackjack.enums.GameState;
 import org.junit.Test;
 
-import static blackjack.controller.Table.*;
 import static blackjack.enums.Suit.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class HitActionIntegrationTest extends IntegrationTestBase {
+
     @Test
     public void should_get_one_card_one_user_and_one_value_after_hit() throws Exception {
         //given
@@ -19,7 +19,7 @@ public class HitActionIntegrationTest extends IntegrationTestBase {
         dealer.startGame();
 
         //when
-        HitActionResponse response = hit();
+        HitActionResponse response = table.hit();
 
         //then
         assertUnFinishedGameResponse(response, false, new Card("Ace", Clubs), "cetera", 3);
@@ -32,7 +32,7 @@ public class HitActionIntegrationTest extends IntegrationTestBase {
         dealer.startGame();
 
         //when
-        HitActionResponse response = hit();
+        HitActionResponse response = table.hit();
 
         //then
         assertFinishedGameResponse(response, false, new Card("Ace", Spades), "cetera", 21, "cetera");
@@ -45,7 +45,7 @@ public class HitActionIntegrationTest extends IntegrationTestBase {
         dealer.startGame();
 
         //when
-        HitActionResponse response = hit();
+        HitActionResponse response = table.hit();
 
         //then
         assertFinishedGameResponse(response, false, new Card("2", Clubs), "cetera", 22, "host");
@@ -59,7 +59,7 @@ public class HitActionIntegrationTest extends IntegrationTestBase {
         cetera.stay(dealer);
 
         //when
-        HitActionResponse response = hit();
+        HitActionResponse response = table.hit();
 
         //then
         assertUnFinishedGameResponse(response, false, new Card("Ace", Clubs), "host", 12);
@@ -73,7 +73,7 @@ public class HitActionIntegrationTest extends IntegrationTestBase {
         cetera.stay(dealer);
 
         //when
-        HitActionResponse response = hit();
+        HitActionResponse response = table.hit();
 
         //then
         assertFinishedGameResponse(response, false, new Card("Ace", Hearts), "host", 21, "host");
@@ -87,7 +87,7 @@ public class HitActionIntegrationTest extends IntegrationTestBase {
         cetera.stay(dealer);
 
         //when
-        HitActionResponse response = hit();
+        HitActionResponse response = table.hit();
 
         //then
         assertFinishedGameResponse(response, false, new Card("2", Spades), "host", 22, "cetera");

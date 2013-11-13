@@ -42,6 +42,10 @@ public class Card {
         return value;
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
+
     private boolean isFaceCard() {
         return value.equals("Jack") || value.equals("Queen") || value.equals("King");
     }

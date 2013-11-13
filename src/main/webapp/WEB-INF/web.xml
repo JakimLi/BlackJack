@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app
-        xmlns="http://java.sun.com/xml/ns/j2ee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-        version="2.4">
-    <servlet>
-        <servlet-name>start</servlet-name>
-        <servlet-class>blackjack.controller.StartServlet</servlet-class>
-    </servlet>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
     <servlet-mapping>
-        <servlet-name>start</servlet-name>
-        <url-pattern>/start</url-pattern>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>jquery.*.map</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>hit</servlet-name>
-        <servlet-class>blackjack.controller.HitServlet</servlet-class>
+        <servlet-name>blackjack</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>hit</servlet-name>
-        <url-pattern>/hit</url-pattern>
-    </servlet-mapping>
 
-    <servlet>
-        <servlet-name>stay</servlet-name>
-        <servlet-class>blackjack.controller.StayServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
-        <servlet-name>stay</servlet-name>
-        <url-pattern>/stay</url-pattern>
+        <servlet-name>blackjack</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
