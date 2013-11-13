@@ -13,6 +13,7 @@ apply plugin: 'maven'
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
 
 
 repositories {

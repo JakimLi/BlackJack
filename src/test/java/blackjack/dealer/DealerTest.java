@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 public class DealerTest {
 
+    public static final int DUCK_CARD_COUNT = 52;
     private Dealer dealer;
 
     @Before
@@ -56,7 +57,7 @@ public class DealerTest {
 
     private void assertOneDeckOfCards(Card[] cards) {
 
-        assertThat(cards, arrayWithSize(52));
+        assertThat(cards, arrayWithSize(DUCK_CARD_COUNT));
 
         for (String value : CARD_VALUES) {
             assertThat(cards, hasItemInArray(new Card(value, Spades)));
@@ -91,7 +92,7 @@ public class DealerTest {
     @Test(expected = RuntimeException.class)
     public void should_error_after_all_cards_were_picked() throws Exception {
         //when
-        for (int i = 0; i < 52; i++) {
+        for (int i = 0; i < DUCK_CARD_COUNT; i++) {
             dealer.pickACard();
         }
 

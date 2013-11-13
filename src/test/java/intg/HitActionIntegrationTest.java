@@ -5,7 +5,9 @@ import blackjack.dealer.Card;
 import blackjack.enums.GameState;
 import org.junit.Test;
 
-import static blackjack.enums.Suit.*;
+import static blackjack.enums.Suit.Hearts;
+import static blackjack.enums.Suit.Spades;
+import static blackjack.enums.Suit.Clubs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -93,7 +95,9 @@ public class HitActionIntegrationTest extends IntegrationTestBase {
         assertFinishedGameResponse(response, false, new Card("2", Spades), "host", 22, "cetera");
     }
 
-    private void assertFinishedGameResponse(HitActionResponse response, boolean isError, Card lastCard, String endByWho, int endValue, String winner) {
+    private void assertFinishedGameResponse(
+            HitActionResponse response, boolean isError, Card lastCard, String endByWho,
+            int endValue, String winner) {
         assertThat(response.isError(), is(isError));
         assertThat(response.getCard(), is(lastCard));
         assertThat(response.getPlayerCode(), is(endByWho));
@@ -102,7 +106,9 @@ public class HitActionIntegrationTest extends IntegrationTestBase {
         assertThat(response.getGameStatus(), is(GameState.Ready));
     }
 
-    private void assertUnFinishedGameResponse(HitActionResponse response, boolean isError, Card lastCard, String lastHitter, int endValue) {
+    private void assertUnFinishedGameResponse(
+            HitActionResponse response, boolean isError, Card lastCard, String lastHitter,
+            int endValue) {
         assertThat(response.isError(), is(isError));
         assertThat(response.getCard(), is(lastCard));
         assertThat(response.getPlayerCode(), is(lastHitter));

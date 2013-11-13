@@ -5,13 +5,18 @@ import org.apache.commons.lang.ArrayUtils;
 
 public class Card {
 
+    public static final int THIRTY_ONE = 31;
     private final String value;
     private final Suit suit;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Card card = (Card) o;
 
@@ -21,7 +26,7 @@ public class Card {
     @Override
     public int hashCode() {
         int result = value.hashCode();
-        result = 31 * result + suit.hashCode();
+        result = THIRTY_ONE * result + suit.hashCode();
         return result;
     }
 

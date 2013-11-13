@@ -10,12 +10,17 @@ import java.util.Random;
 
 import static blackjack.enums.GameState.Ongoing;
 import static blackjack.enums.GameState.Ready;
-import static blackjack.enums.Suit.*;
+import static blackjack.enums.Suit.Hearts;
+import static blackjack.enums.Suit.Spades;
+import static blackjack.enums.Suit.Clubs;
+import static blackjack.enums.Suit.Diamonds;
 import static org.apache.commons.lang.ArrayUtils.removeElement;
 
 public class Dealer {
-    public static final String[] CARD_VALUES = new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+    public static final String[] CARD_VALUES =
+            new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
     public static final int UP_LIMIT_POINTS = 21;
+    public static final int DUCK_CARD_COUNT = 52;
 
     private Card[] cards;
     private Random randomGenerator;
@@ -29,7 +34,7 @@ public class Dealer {
     }
 
     public Card[] shuffle() {
-        cards = new Card[52];
+        cards = new Card[DUCK_CARD_COUNT];
         int i = 0;
         for (String value : CARD_VALUES) {
             i = fillCardsBySuits(i, value);

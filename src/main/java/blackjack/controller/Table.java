@@ -15,7 +15,7 @@ import static blackjack.dealer.Dealer.UP_LIMIT_POINTS;
 import static blackjack.enums.PlayerState.Stay;
 
 public class Table implements Serializable {
-    private final static Logger logger = LoggerFactory.getLogger(Table.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(Table.class);
     private static final String CETERA_USER_CODE = "cetera";
     private static final String HOUSE_USER_CODE = "host";
     private static final String EVEN_CODE = "even";
@@ -31,7 +31,7 @@ public class Table implements Serializable {
             dealer.register(house);
             dealer.register(cetera);
         } catch (IllegalGameStateException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -96,14 +96,13 @@ public class Table implements Serializable {
 
     public StayActionResponse stay() {
         Player player = cetera.getStatus() != Stay ? cetera : house;
-        logger.info("Player:" + (player.equals(cetera) ? "cetera" : "house"));
+        LOGGER.info("Player:" + (player.equals(cetera) ? "cetera" : "house"));
         StayActionResponse response = new StayActionResponse();
         try {
             player.stay(dealer);
             response.setError(false);
             if (player.equals(house)) {
-                logger.info("Winner:" + decideWinnerCode());
-                logger.info("winnersValue:" + (decideWinnerCode().equals("cetera") ? cetera.getValue() : house. getValue()));
+                LOGGER.info("Winner:" + decideWinnerCode());
                 response.setWinnerCode(decideWinnerCode());
                 stopGame();
             }
