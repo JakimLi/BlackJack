@@ -24,15 +24,6 @@ public class IntegrationTestBase {
         dealer.setRandomGenerator(random);
     }
 
-//    @Before
-//    public void setUp() throws Exception {
-//        dealer = new Dealer();
-//        house = new Player();
-//        cetera = new Player();
-//        dealer.register(house);
-//        dealer.register(cetera);
-//    }
-
     @After
     public void tearDown() throws Exception {
         dealer.stopGame();
