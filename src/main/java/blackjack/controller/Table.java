@@ -47,9 +47,8 @@ public class Table implements Serializable {
             response.setError(true);
         } catch (IllegalPlayerStateException e) {
             response.setError(true);
-        } finally {
-            return response;
         }
+        return response;
     }
 
     public HitActionResponse hit() {
@@ -66,9 +65,8 @@ public class Table implements Serializable {
             response.setError(true);
         } catch (IllegalGameStateException e) {
             response.setError(true);
-        } finally {
-            return response;
         }
+        return response;
     }
 
     private void checkGameStatusAndChooseWinner(HitActionResponse response, Player player) {
@@ -84,7 +82,6 @@ public class Table implements Serializable {
 
     public void stopGame() {
         dealer.stopGame();
-//        initTable();
     }
 
     private Player decidePlayer(HitActionResponse response) {
